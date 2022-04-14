@@ -22,7 +22,7 @@ maintainer:         moonnarga@outlook.com
 extra-source-files: CHANGELOG.md
 
 library
-    exposed-modules:  MyLib
+    exposed-modules:  BST
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -50,7 +50,7 @@ executable test-project
 
 Test-Suite test-foo
     type:       exitcode-stdio-1.0
-    main-is:    Main.hs
+    main-is:    Tests.hs
     build-depends: 
         base,
         test-project
