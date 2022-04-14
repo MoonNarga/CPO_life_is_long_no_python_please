@@ -6,10 +6,13 @@ import BST
   , bstRight
   , bstValue
   , empty
+  , isEmpty
   , fromList
   , insert
-  , singleton
   , toList
+  , size
+  , member
+  , singleton
   )
 
 main :: IO ()
@@ -27,17 +30,17 @@ specs = do
     it "inserting less" $ do
       let t = insert 2 (singleton int4)
       bstValue t `shouldBe` Just 4
-      (bstLeft t >>= bstValue) `shouldBe` Just 2
+      bstValue (bstLeft t) `shouldBe` Just 2
 
     it "inserting same" $ do
       let t = insert 4 (singleton int4)
       bstValue t `shouldBe` Just 4
-      (bstLeft t >>= bstValue) `shouldBe` Just 4
+      bstValue (bstLeft t) `shouldBe` Just 4
 
     it "inserting right" $ do
       let t = insert 5 (singleton int4)
       bstValue t `shouldBe` Just 4
-      (bstRight t >>= bstValue) `shouldBe` Just 5
+      bstValue(bstRight t) `shouldBe` Just 5
 
     it "empty list to tree" $
       fromList noInts `shouldBe` empty
@@ -51,13 +54,13 @@ specs = do
 
     it "complex tree" $ do
       let t = fromList [int4, 2, 6, 1, 3, 7, 5]
-      bstValue  t                            `shouldBe` Just 4
-      (bstLeft  t >>= bstValue             ) `shouldBe` Just 2
-      (bstLeft  t >>= bstLeft  >>= bstValue) `shouldBe` Just 1
-      (bstLeft  t >>= bstRight >>= bstValue) `shouldBe` Just 3
-      (bstRight t >>= bstValue             ) `shouldBe` Just 6
-      (bstRight t >>= bstLeft  >>= bstValue) `shouldBe` Just 5
-      (bstRight t >>= bstRight >>= bstValue) `shouldBe` Just 7
+      bstValue  t                        `shouldBe` Just 4
+      bstValue (bstLeft  t             ) `shouldBe` Just 2
+      bstValue (bstLeft (bstLeft  t)   ) `shouldBe` Just 1
+      bstValue (bstRight (bstLeft  t)  ) `shouldBe` Just 3
+      bstValue (bstRight t             ) `shouldBe` Just 6
+      bstValue (bstLeft (bstRight t)   ) `shouldBe` Just 5
+      bstValue (bstRight (bstRight t)  ) `shouldBe` Just 7
 
     it "empty tree to list" $
       length (toList empty) `shouldBe` 0

@@ -4,6 +4,7 @@ module BST
     , bstRight
     , bstValue
     , empty
+    , isEmpty
     , fromList
     , insert
     , toList
@@ -12,7 +13,7 @@ module BST
     , singleton
     ) where
 
-data BST t = Empty  | Node t (BST t) (BST t) deriving Show
+data BST t = Empty  | Node t (BST t) (BST t) deriving (Show, Eq)
 
 bstValue :: BST a -> Maybe a
 bstValue Empty = Nothing
@@ -26,9 +27,12 @@ bstRight :: BST a -> BST a
 bstRight Empty = Empty
 bstRight (Node n le ri) = ri
 
-empty :: BST a -> Bool
-empty Empty = True
-empty n = False
+empty :: BST a
+empty = Empty
+
+isEmpty :: BST a -> Bool
+isEmpty Empty = True
+isEmpty n = False
 
 size :: BST a -> Int
 size Empty = 0
