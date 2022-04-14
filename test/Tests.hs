@@ -35,7 +35,7 @@ specs = do
     it "inserting same" $ do
       let t = insert 4 (singleton int4)
       bstValue t `shouldBe` Just 4
-      bstValue (bstLeft t) `shouldBe` Just 4
+      bstValue (bstLeft t) `shouldBe` Nothing
 
     it "inserting right" $ do
       let t = insert 5 (singleton int4)
@@ -54,13 +54,13 @@ specs = do
 
     it "complex tree" $ do
       let t = fromList [int4, 2, 6, 1, 3, 7, 5]
-      bstValue  t                        `shouldBe` Just 4
-      bstValue (bstLeft  t             ) `shouldBe` Just 2
+      bstValue  t                        `shouldBe` Just 5
+      bstValue (bstLeft  t             ) `shouldBe` Just 3
       bstValue (bstLeft (bstLeft  t)   ) `shouldBe` Just 1
-      bstValue (bstRight (bstLeft  t)  ) `shouldBe` Just 3
-      bstValue (bstRight t             ) `shouldBe` Just 6
-      bstValue (bstLeft (bstRight t)   ) `shouldBe` Just 5
-      bstValue (bstRight (bstRight t)  ) `shouldBe` Just 7
+      bstValue (bstRight (bstLeft  t)  ) `shouldBe` Just 4
+      bstValue (bstRight t             ) `shouldBe` Just 7
+      bstValue (bstLeft (bstRight t)   ) `shouldBe` Just 6
+      bstValue (bstRight (bstRight t)  ) `shouldBe` Nothing
 
     it "empty tree to list" $
       length (toList empty) `shouldBe` 0
@@ -70,9 +70,6 @@ specs = do
 
     it "iterating over smaller element" $
       toList (fromList [int4, 2]) `shouldBe` [2, 4]
-
-    it "iterating over equal element" $
-      toList (fromList [int4, 4]) `shouldBe` [4, 4]
 
     it "iterating over larger element" $
       toList (fromList [int4, 5]) `shouldBe` [4, 5]
