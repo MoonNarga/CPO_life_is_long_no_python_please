@@ -51,9 +51,11 @@ executable test-project
 Test-Suite test-foo
     type:       exitcode-stdio-1.0
     main-is:    Tests.hs
+    
     build-depends: 
         base,
-        test-project
+        test-project,
+        hspec
         
-    hs-source-dirs:   app
+    hs-source-dirs:   test
     default-language: Haskell2010
