@@ -39,3 +39,9 @@ The use of Haskell.
 
 ## Design note
 
+The function ``fromList`` generate a BST by the reverse order by the argus.
+(It really confuse me at first because I build the test cases as normal)
+
+When building the func ``evenFilter``, the type brings some trouble.
+It's really to understand that ``BST Int``, maybe like the templete in C++?
+Like ``BST<int>``.
