@@ -45,3 +45,13 @@ The function ``fromList`` generate a BST by the reverse order by the argus.
 When building the func ``evenFilter``, the type brings some trouble.
 It's really to understand that ``BST Int``, maybe like the templete in C++?
 Like ``BST<int>``.
+
+## About Test
+
+We can build the unit test for our code, but when build the cases,
+we are still following the logic we wrote the code. So it is normal that
+we miss some situations.
+
+PBT test may overcome this problem, it would make test more comprehensive.
+But at the same time, I don't even konw how to use it in Haskell project.
+Maybe this is a disadvantage?

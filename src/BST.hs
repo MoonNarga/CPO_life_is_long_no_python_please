@@ -88,4 +88,3 @@ remove n (Node node left right)
   | n == node = unionSubtrees left right
   | n < node = Node node (remove n left) right
   | n > node = Node node left (remove n right)
-
