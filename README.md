@@ -36,3 +36,6 @@ also the action.
 ## Key features
 
 The use of Haskell.
+
+## Design note
+

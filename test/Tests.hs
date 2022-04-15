@@ -13,6 +13,7 @@ import BST
   , size
   , member
   , singleton
+  , remove
   )
 
 main :: IO ()
@@ -54,6 +55,8 @@ specs = do
 
     it "complex tree" $ do
       let t = fromList [int4, 2, 6, 1, 3, 7, 5]
+      member   3 t                       `shouldBe` True 
+      member   9 t                       `shouldBe` False  
       bstValue  t                        `shouldBe` Just 5
       bstValue (bstLeft  t             ) `shouldBe` Just 3
       bstValue (bstLeft (bstLeft  t)   ) `shouldBe` Just 1
@@ -61,6 +64,7 @@ specs = do
       bstValue (bstRight t             ) `shouldBe` Just 7
       bstValue (bstLeft (bstRight t)   ) `shouldBe` Just 6
       bstValue (bstRight (bstRight t)  ) `shouldBe` Nothing
+      toList   (remove 3 t)              `shouldBe` [1, 2, 4, 5, 6, 7]
 
     it "empty tree to list" $
       length (toList empty) `shouldBe` 0
