@@ -2,7 +2,7 @@
 
 ## Description
 
-Objectives:  
+Objectives:
 
 - Use development tools: Haskell, IDE/source code editor, git
 , Github Actions, and laboratory work process
