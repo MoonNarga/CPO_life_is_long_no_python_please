@@ -11,6 +11,7 @@ module BST
     , size
     , member
     , singleton
+    , remove
     ) where
 
 data BST t = Empty  | Node t (BST t) (BST t) deriving (Show, Eq)
@@ -38,10 +39,10 @@ size :: BST a -> Int
 size Empty = 0
 size (Node n le ri) = 1 + size le + size ri
 
-member :: Ord a => a -> BST a -> Bool 
-member n Empty = False 
+member :: Ord a => a -> BST a -> Bool
+member n Empty = False
 member n (Node t le ri)
-    | n == t = True 
+    | n == t = True
     | n < t = member n le
     | n > t = member n ri
 
@@ -63,13 +64,29 @@ toList (Node n le ri) = toList le ++ [n] ++ toList ri
 singleton :: a -> BST a
 singleton n = Node n Empty Empty
 
--- remove :: Int -> BST a -> Bool
--- remove n Empty = False
--- remove n (Node t Empty Empty)
---     | n == t = Empty
---     | otherwise = False
--- remove n (Node t le Empty)
+evenFilter :: Integral a => BST a -> [a]
+evenFilter Empty = []
+evenFilter (Node n le ri)
+    | even n = evenFilter le ++ [n] ++ evenFilter ri
+    | otherwise = evenFilter le ++ evenFilter ri
 
--- remove n (Node t Empty ri)
+unionSubtrees :: BST t -> BST t -> BST t
+unionSubtrees left (Node node Empty right) = Node node left right
+unionSubtrees l (Node node left right) = Node node (unionSubtrees l left) right
 
--- remove n (Node t le ri)
+remove :: Ord t => t -> BST t -> BST t
+remove n Empty = Empty
+remove n (Node node left Empty)
+  | n == node = left
+  | n < node = Node node (remove n left) Empty
+  | n > node = Node node left Empty
+remove n (Node node Empty right)
+  | n == node = right
+  | n < node = Node node Empty (remove n right)
+  | n > node = Node node Empty right
+remove n (Node node left right)
+  | n == node = unionSubtrees left right
+  | n < node = Node node (remove n left) right
+  | n > node = Node node left (remove n right)
+
+-- map :: 
