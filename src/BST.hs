@@ -12,6 +12,7 @@ module BST
     , member
     , singleton
     , remove
+    , evenFilter
     ) where
 
 data BST t = Empty  | Node t (BST t) (BST t) deriving (Show, Eq)
@@ -89,4 +90,12 @@ remove n (Node node left right)
   | n < node = Node node (remove n left) right
   | n > node = Node node left (remove n right)
 
--- map :: 
+toBstList :: BST a -> [BST a]
+toBstList Empty = []
+toBstList (Node n le ri) = [Node n le ri] ++ toBstList le ++ toBstList ri
+
+-- iterator :: BST a -> [BST a]
+-- iterator Empty = []
+-- iterator (Node n le ri) = [Node n le ri] ++ iterator le ++ iterator ri
+
+-- map ::  
