@@ -64,7 +64,7 @@ toList (Node n le ri) = toList le ++ [n] ++ toList ri
 singleton :: a -> BST a
 singleton n = Node n Empty Empty
 
-evenFilter :: BST Int -> [Int]
+evenFilter :: Integral a => BST a -> [a]
 evenFilter Empty = []
 evenFilter (Node n le ri)
     | even n = evenFilter le ++ [n] ++ evenFilter ri
@@ -88,3 +88,5 @@ remove n (Node node left right)
   | n == node = unionSubtrees left right
   | n < node = Node node (remove n left) right
   | n > node = Node node left (remove n right)
+
+-- map :: 
