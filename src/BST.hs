@@ -1,8 +1,8 @@
 module BST
     ( BST
-    , bstLeft
-    , bstRight
-    , bstValue
+    , value
+    , lchild
+    , rchild
     , empty
     , isEmpty
     , fromList
@@ -15,19 +15,27 @@ module BST
     , evenFilter
     ) where
 
-data BST t = Empty  | Node t (BST t) (BST t) deriving (Show, Eq)
+-- data BST t = Empty  | Node t (BST t) (BST t) deriving (Show, Eq)
 
-bstValue :: BST a -> Maybe a
-bstValue Empty = Nothing
-bstValue (Node n l r) = Just n
+data BST t = Empty
+  | Node 
+  { value :: t
+  , lchild :: BST t
+  , rchild :: BST t
+  } 
+  deriving (Show, Eq)
 
-bstLeft :: BST a -> BST a
-bstLeft Empty = Empty
-bstLeft (Node n le ri) = le
+-- bstValue :: BST a -> Maybe a
+-- bstValue Empty = Nothing
+-- bstValue (Node n l r) = Just n
 
-bstRight :: BST a -> BST a
-bstRight Empty = Empty
-bstRight (Node n le ri) = ri
+-- bstLeft :: BST a -> BST a
+-- bstLeft Empty = Empty
+-- bstLeft (Node n le ri) = le
+
+-- bstRight :: BST a -> BST a
+-- bstRight Empty = Empty
+-- bstRight (Node n le ri) = ri
 
 empty :: BST a
 empty = Empty
