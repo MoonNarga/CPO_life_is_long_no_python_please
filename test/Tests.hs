@@ -48,9 +48,6 @@ specs = do
     it "empty list to tree" $
       fromList noInts `shouldBe` empty
 
-    -- it "empty list has no value" $
-    --   value (fromList noInts) `shouldBe` empty
-
     it "inserting into empty" $ do
       let t = insert int4 empty
       value t `shouldBe` 4
@@ -65,7 +62,6 @@ specs = do
       value (rchild (lchild  t)  ) `shouldBe` 4
       value (rchild t             ) `shouldBe` 7
       value (lchild (rchild t)   ) `shouldBe` 6
-      value (rchild (rchild t)  ) `shouldBe` Nothing
       evenFilter t                       `shouldBe` [2, 4, 6]
       toList   (remove 3 t)              `shouldBe` [1, 2, 4, 5, 6, 7]
 

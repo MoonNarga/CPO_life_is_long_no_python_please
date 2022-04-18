@@ -15,27 +15,13 @@ module BST
     , evenFilter
     ) where
 
--- data BST t = Empty  | Node t (BST t) (BST t) deriving (Show, Eq)
-
 data BST t = Empty
-  | Node 
+  | Node
   { value :: t
   , lchild :: BST t
   , rchild :: BST t
-  } 
+  }
   deriving (Show, Eq)
-
--- bstValue :: BST a -> Maybe a
--- bstValue Empty = Nothing
--- bstValue (Node n l r) = Just n
-
--- bstLeft :: BST a -> BST a
--- bstLeft Empty = Empty
--- bstLeft (Node n le ri) = le
-
--- bstRight :: BST a -> BST a
--- bstRight Empty = Empty
--- bstRight (Node n le ri) = ri
 
 empty :: BST a
 empty = Empty
@@ -49,11 +35,11 @@ size Empty = 0
 size (Node n le ri) = 1 + size le + size ri
 
 member :: Ord a => a -> BST a -> Bool
-member n Empty = False
-member n (Node t le ri)
-    | n == t = True
-    | n < t = member n le
-    | n > t = member n ri
+member v Empty = False
+member v (Node t le ri)
+    | v == t = True
+    | v < t = member v le
+    | v > t = member v ri
 
 insert :: Ord a => a -> BST a -> BST a
 insert n Empty = Node n Empty Empty
