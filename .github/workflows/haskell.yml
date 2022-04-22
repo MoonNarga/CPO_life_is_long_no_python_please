@@ -42,6 +42,22 @@ jobs:
     - name: Run tests
       run: cabal test all
   
+  hlint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: 'Set up HLint'
+      uses: haskell/actions/hlint-setup@v1
+      with:
+        version: '3.1.6'
+
+    - name: 'Run HLint'
+      uses: haskell/actions/hlint-run@v1
+      with:
+        path: src/
+        fail-on: warning
+  
   markdown:
     name: Lint markdown
     runs-on: ubuntu-latest
