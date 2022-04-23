@@ -60,3 +60,15 @@ Test-Suite test-foo
         
     hs-source-dirs:   test
     default-language: Haskell2010
+
+Test-Suite test-PBT
+    type:       exitcode-stdio-1.0
+    main-is:    PBT.hs
+    
+    build-depends: 
+        base,
+        test-project,
+        QuickCheck
+        
+    hs-source-dirs:   test
+    default-language: Haskell2010

@@ -1,12 +1,14 @@
 import BST
   ( BST,
     bstFilter,
+    concatBst,
     empty,
     fromList,
     getIterator,
     getNext,
     hasNext,
     insert,
+    insertList,
     isEmpty,
     lchild,
     mapBst,
@@ -86,3 +88,11 @@ specs = do
 
   it "iterating over complex tree" $
     toList (fromList [int4, 2, 1, 3, 6, 7, 5]) `shouldBe` [1 .. 7]
+
+  it "concat" $ do
+    let t1 = fromList [2, 4, 3]
+    let t2 = fromList [5, 1, 7]
+    let t3 = fromList [9, 8]
+    toList (concatBst t1 empty) `shouldBe` [2, 3, 4]
+    toList (concatBst t1 t2) `shouldBe` [1, 2, 3, 4, 5, 7]
+    toList (concatBst (concatBst t1 t2) t3) == toList (concatBst t1 (concatBst t2 t3)) `shouldBe` True

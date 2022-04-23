@@ -15,3 +15,7 @@
 ## 0.1.0.3 -- 2022-04-18
 
 * Use record syntax instead of some funcs.
+
+## 0.1.1.0 -- 2022-04-23
+
+* Achieve every functions needed and add the test using quickcheck.

@@ -19,6 +19,8 @@ module BST
     bstFilter,
     mapBst,
     reduceBst,
+    insertList,
+    concatBst,
   )
 where
 
@@ -71,7 +73,7 @@ singleton n = Node n Empty Empty
 unionSubtrees :: BST t -> BST t -> BST t
 unionSubtrees left (Node node Empty right) = Node node left right
 unionSubtrees l (Node node left right) = Node node (unionSubtrees l left) right
-unionSubtrees _ _ = error "error in union"
+unionSubtrees _ _ = error "error in union after remove"
 
 remove :: Ord t => t -> BST t -> BST t
 remove _ Empty = Empty
@@ -127,3 +129,13 @@ reduceBst f it initValue
   | hasNext it = reduceBst f (getNext it) (f initValue (value (current it)))
   | not $ hasNext it = f initValue (value (current it))
   | otherwise = error "error in reduce"
+
+insertList :: Ord a => BST a -> [a] -> BST a
+insertList Empty xs = fromList xs
+insertList n [] = n
+insertList n (x : xs) = insertList (insert x n) xs
+
+concatBst :: Ord a => BST a -> BST a -> BST a
+concatBst Empty n = n
+concatBst n Empty = n
+concatBst n1 n2 = insertList n1 (toList n2)
