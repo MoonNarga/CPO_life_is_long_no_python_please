@@ -2,20 +2,26 @@ import Test.Hspec        (Spec, it, shouldBe)
 import Test.Hspec.Runner (defaultConfig, hspecWith)
 
 import BST
-  ( BST
-  , value
-  , lchild
-  , rchild
-  , empty
-  , isEmpty
-  , fromList
-  , insert
-  , toList
-  , size
-  , member
-  , singleton
-  , remove
-  , evenFilter
+  ( BST,
+    value,
+    lchild,
+    rchild,
+    empty,
+    isEmpty,
+    fromList,
+    insert,
+    toList,
+    size,
+    member,
+    singleton,
+    remove,
+    toBstList,
+    getIterator,
+    hasNext,
+    getNext,
+    bstFilter,
+    mapBst,
+    reduceBst,
   )
 
 main :: IO ()
@@ -56,13 +62,16 @@ specs = do
       let t = fromList [int4, 2, 6, 1, 3, 7, 5]
       member   3 t                       `shouldBe` True 
       member   9 t                       `shouldBe` False  
-      value  t                        `shouldBe` 5
-      value (lchild  t             ) `shouldBe` 3
-      value (lchild (lchild  t)   ) `shouldBe` 1
-      value (rchild (lchild  t)  ) `shouldBe` 4
-      value (rchild t             ) `shouldBe` 7
-      value (lchild (rchild t)   ) `shouldBe` 6
-      evenFilter t                       `shouldBe` [2, 4, 6]
+      value  t                           `shouldBe` 4
+      value (lchild  t             )     `shouldBe` 2
+      value (lchild (lchild  t)    )     `shouldBe` 1
+      value (rchild (lchild  t)    )     `shouldBe` 3
+      value (rchild t              )     `shouldBe` 6
+      value (lchild (rchild t)     )     `shouldBe` 5
+      bstFilter even (getIterator t)     `shouldBe` [2, 4, 6]
+      mapBst (*2) (getIterator t)        `shouldBe` [2, 4, 6, 8, 10, 12, 14]
+      reduceBst (+) (getIterator t) 0    `shouldBe` 28
+      reduceBst (*) (getIterator t) 1    `shouldBe` 5040
       toList   (remove 3 t)              `shouldBe` [1, 2, 4, 5, 6, 7]
 
     it "empty tree to list" $
