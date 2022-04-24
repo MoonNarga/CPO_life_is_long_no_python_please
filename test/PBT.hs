@@ -25,6 +25,7 @@ import BST
     value,
   )
 import Data.List
+import qualified Data.Set as Set
 import Test.QuickCheck
 import Test.QuickCheck.Arbitrary
 import Test.QuickCheck.Gen
@@ -53,10 +54,14 @@ prop_everyElement xs = sort xs == toList (fromList xs)
 prop_concatBst :: [Integer] -> [Integer] -> Bool
 prop_concatBst xs1 xs2 = sort (xs1 ++ xs2) == toList (concatBst (fromList xs1) (fromList xs2))
 
+prop_monoid :: [Integer] -> [Integer] -> [Integer] -> Bool
+prop_monoid xs1 xs2 xs3 = toList (fromList xs1 <> (fromList xs2 <> fromList xs3)) == toList ((fromList xs1 <> fromList xs2) <> fromList xs3)
+
 runTests :: Args -> IO ()
 runTests args = do
   f prop_everyElement "every element ok?"
   f prop_concatBst "concat ok?"
+  f prop_monoid "monoid ok?"
   where
     f prop str = do
       putStrLn str

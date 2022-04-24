@@ -24,6 +24,8 @@ module BST
   )
 where
 
+import Data.Monoid ()
+
 data BST t
   = Empty
   | Node
@@ -139,3 +141,10 @@ concatBst :: Ord a => BST a -> BST a -> BST a
 concatBst Empty n = n
 concatBst n Empty = n
 concatBst n1 n2 = insertList n1 (toList n2)
+
+instance Ord a => Semigroup (BST a) where
+  (<>) = concatBst
+
+instance Ord a => Monoid (BST a) where
+  mempty = Empty
+  mappend = (<>)
