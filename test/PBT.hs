@@ -1,10 +1,9 @@
 module Main where
 
 import BST
-  ( BST,
+  ( BST (Empty, Node),
     bstFilter,
     concatBst,
-    empty,
     fromList,
     getIterator,
     getNext,
@@ -24,18 +23,31 @@ import BST
     toList,
     value,
   )
+import Control.Monad (liftM3)
 import Data.List
 import qualified Data.Set as Set
+import System.Random (Random)
 import Test.QuickCheck
 import Test.QuickCheck.Arbitrary
 import Test.QuickCheck.Gen
 
--- instance Arbitrary BST where
---   arbitrary =
---     oneof
---       [ return Empty,
---         liftM Node {value = Int, lchild = arbitrary, rchild = arbitrary}
---       ]
+instance (Ord a, Bounded a, Random a, Num a, Arbitrary a) => Arbitrary (BST a) where
+  arbitrary = gen (-10000) 10000
+    where
+      gen :: (Ord a, Num a, Random a) => a -> a -> Gen (BST a)
+      gen min max | (max - min) <= 3 = return Empty
+      gen min max = do
+        elt <- choose (min, max)
+        frequency
+          [ (1, return Empty),
+            ( 6,
+              liftM3
+                Node
+                (return elt)
+                (gen min (elt - 1))
+                (gen (elt + 1) max)
+            )
+          ]
 
 arg :: Args
 arg =
@@ -49,19 +61,25 @@ arg =
     }
 
 prop_everyElement :: [Integer] -> Bool
-prop_everyElement xs = sort xs == toList (fromList xs)
+prop_everyElement xs = Set.toList (Set.fromList xs) == toList (fromList xs)
 
 prop_concatBst :: [Integer] -> [Integer] -> Bool
-prop_concatBst xs1 xs2 = sort (xs1 ++ xs2) == toList (concatBst (fromList xs1) (fromList xs2))
+prop_concatBst xs1 xs2 = Set.toList (Set.fromList (xs1 ++ xs2)) == toList (concatBst (fromList xs1) (fromList xs2))
 
 prop_monoid :: [Integer] -> [Integer] -> [Integer] -> Bool
 prop_monoid xs1 xs2 xs3 = toList (fromList xs1 <> (fromList xs2 <> fromList xs3)) == toList ((fromList xs1 <> fromList xs2) <> fromList xs3)
+
+prop_empty :: BST Int -> Bool
+prop_empty a =
+  Empty <> a == a
+    && a <> Empty == a
 
 runTests :: Args -> IO ()
 runTests args = do
   f prop_everyElement "every element ok?"
   f prop_concatBst "concat ok?"
   f prop_monoid "monoid ok?"
+  f prop_empty "empty ok?"
   where
     f prop str = do
       putStrLn str

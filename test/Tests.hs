@@ -1,8 +1,7 @@
 import BST
-  ( BST,
+  ( BST (Empty, Node),
     bstFilter,
     concatBst,
-    empty,
     fromList,
     getIterator,
     getNext,
@@ -44,18 +43,18 @@ specs = do
   it "inserting same" $ do
     let t = insert 4 (singleton int4)
     value t `shouldBe` 4
-    lchild t `shouldBe` empty
+    lchild t `shouldBe` Empty
 
   it "inserting right" $ do
     let t = insert 5 (singleton int4)
     value t `shouldBe` 4
     value (rchild t) `shouldBe` 5
 
-  it "empty list to tree" $
-    fromList noInts `shouldBe` empty
+  it "Empty list to tree" $
+    fromList noInts `shouldBe` Empty
 
-  it "inserting into empty" $ do
-    let t = insert int4 empty
+  it "inserting into Empty" $ do
+    let t = insert int4 Empty
     value t `shouldBe` 4
 
   it "complex tree" $ do
@@ -74,8 +73,8 @@ specs = do
     reduceBst (*) (getIterator t) 1 `shouldBe` 5040
     toList (remove 3 t) `shouldBe` [1, 2, 4, 5, 6, 7]
 
-  it "empty tree to list" $
-    length (toList empty) `shouldBe` 0
+  it "Empty tree to list" $
+    length (toList Empty) `shouldBe` 0
 
   it "iterating one element" $
     toList (singleton int4) `shouldBe` [4]
@@ -93,6 +92,6 @@ specs = do
     let t1 = fromList [2, 4, 3]
     let t2 = fromList [5, 1, 7]
     let t3 = fromList [9, 8]
-    toList (concatBst t1 empty) `shouldBe` [2, 3, 4]
+    toList (concatBst t1 Empty) `shouldBe` [2, 3, 4]
     toList (concatBst t1 t2) `shouldBe` [1, 2, 3, 4, 5, 7]
     toList (concatBst (concatBst t1 t2) t3) == toList (concatBst t1 (concatBst t2 t3)) `shouldBe` True

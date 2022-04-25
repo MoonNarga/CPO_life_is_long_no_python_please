@@ -1,9 +1,8 @@
 module BST
-  ( BST,
+  ( BST (Empty, Node),
     value,
     lchild,
     rchild,
-    empty,
     isEmpty,
     fromList,
     insert,
@@ -34,9 +33,6 @@ data BST t
         rchild :: BST t
       }
   deriving (Show, Eq)
-
-empty :: BST a
-empty = Empty
 
 isEmpty :: BST a -> Bool
 isEmpty Empty = True
