@@ -1,5 +1,9 @@
 # Revision history for test-project
 
+## 0.1.4.0 -- 2022-05-17
+
+* Add test for BST with data type String
+
 ## 0.1.3.0 -- 2022-04-25
 
 * Achieve generator for random BST and build the test.

@@ -66,8 +66,11 @@ prop_everyElement xs = Set.toList (Set.fromList xs) == toList (fromList xs)
 prop_concatBst :: [Integer] -> [Integer] -> Bool
 prop_concatBst xs1 xs2 = Set.toList (Set.fromList (xs1 ++ xs2)) == toList (concatBst (fromList xs1) (fromList xs2))
 
-prop_monoid :: [Integer] -> [Integer] -> [Integer] -> Bool
-prop_monoid xs1 xs2 xs3 = toList (fromList xs1 <> (fromList xs2 <> fromList xs3)) == toList ((fromList xs1 <> fromList xs2) <> fromList xs3)
+prop_monoid_Int :: [Integer] -> [Integer] -> [Integer] -> Bool
+prop_monoid_Int xs1 xs2 xs3 = toList (fromList xs1 <> (fromList xs2 <> fromList xs3)) == toList ((fromList xs1 <> fromList xs2) <> fromList xs3)
+
+prop_monoid_Str :: [String] -> [String] -> [String] -> Bool
+prop_monoid_Str xs1 xs2 xs3 = toList (fromList xs1 <> (fromList xs2 <> fromList xs3)) == toList ((fromList xs1 <> fromList xs2) <> fromList xs3)
 
 prop_empty :: BST Int -> Bool
 prop_empty a =
@@ -78,8 +81,9 @@ runTests :: Args -> IO ()
 runTests args = do
   f prop_everyElement "every element ok?"
   f prop_concatBst "concat ok?"
-  f prop_monoid "monoid ok?"
   f prop_empty "empty ok?"
+  f prop_monoid_Int "monoid_Int ok?"
+  f prop_monoid_Str "monoid_Str ok?"
   where
     f prop str = do
       putStrLn str
