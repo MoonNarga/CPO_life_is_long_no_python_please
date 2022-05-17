@@ -42,7 +42,7 @@ specs = do
 
   it "inserting same" $ do
     let t = insert 4 (singleton int4)
-    value t `shouldBe` 4 
+    value t `shouldBe` 4
     lchild t `shouldBe` Empty
 
   it "inserting right" $ do
